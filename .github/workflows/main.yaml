@@ -3,7 +3,7 @@ name: Git LFS on GitHub Pages
 on:
   push:
     branches:
-      - main  # or whatever your main branch is named
+      - main
 
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
           git lfs pull
 
       - name: Build and Deploy
-        uses: peaceiris/actions-gh-pages@v3.11.0
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./ # or whatever your publish directory is named
+          publish_dir: ./ 
           github_token: ${{ secrets.GITHUB_TOKEN }}
           lfs: true
