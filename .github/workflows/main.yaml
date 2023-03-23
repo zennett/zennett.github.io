@@ -1,0 +1,32 @@
+name: Enable Git LFS on GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Git LFS
+        run: |
+          git lfs install
+      - name: Fetch Git LFS files
+        run: |
+          git lfs fetch --all
+      - name: Checkout Git LFS files
+        run: |
+          git lfs checkout
+      - name: Build Jekyll site
+        uses: helaili/jekyll-action@2.0.5
+        with:
+          config_path: _config.yml
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: _site
